@@ -18,16 +18,16 @@ script_tracts := $(processing)/some-data-processing-script.js
 source_turnout_xls := http://www.sos.state.mn.us/Modules/ShowDocument.aspx?documentid=14558
 source_county_geojson := http://www.gis.leg.mn/php/shptoGeojson.php?file=/geo/data/county/county2012
 
-# Local sources
+# Local sources (not that node really wants a .json file to read correctly)
 local_turnout_xls := $(original)/sec-of-state-county-turnout-registration-rates-data.xlsx
-local_county_geojson := $(original)/county2012.geojson
+local_county_geojson := $(original)/county2012.geo.json
 
 # Converted
 build_turnout_summary := $(build)/turnout_summary.json
 build_turnout_detail := $(build)/turnout_detail.json
 
 # Final
-example := $(data)/swlrt-route.geo.json
+county_turnout := $(data)/county_turnout.geo.json
 
 
 
@@ -55,6 +55,16 @@ clean_convert:
 	rm -rv $(build)/*
 
 
+
+# Final processing
+$(county_turnout): $(build_turnout_summary) $(build_turnout_detail) $(local_county_geojson)
+	node data/processing/county-combine.js
+
+processing: $(county_turnout)
+clean_processing:
+	rm -rv $(county_turnout)
+
+
 # General
-all: convert
-clean: clean_download clean_convert
+all: processing
+clean: clean_download clean_convert clean_processing
