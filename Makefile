@@ -23,7 +23,8 @@ local_turnout_xls := $(original)/sec-of-state-county-turnout-registration-rates-
 local_county_geojson := $(original)/county2012.geojson
 
 # Converted
-build_example := $(build)/swlrt-route.geo.json
+build_turnout_summary := $(build)/turnout_summary.json
+build_turnout_detail := $(build)/turnout_detail.json
 
 # Final
 example := $(data)/swlrt-route.geo.json
@@ -42,16 +43,16 @@ clean_download:
 	rm -rv $(original)/*
 
 
-# Convert and filter data files
-$(example): $(local_example_shp)
-	mkdir -p $(build)
-	ogr2ogr -f "GeoJSON" $(build_example) $(local_example_shp) -overwrite -where "NAME = 'Southwest LRT'" -t_srs "EPSG:4326"
-	cp $(build_example) $(example)
+# Convert files
+$(build_turnout_summary): $(local_turnout_xls)
+	in2csv --sheet=Summary $(local_turnout_xls) | csvjson > $(build_turnout_summary)
 
-convert: $(example)
+$(build_turnout_detail): $(local_turnout_xls)
+	in2csv --sheet=Detail $(local_turnout_xls) | csvjson > $(build_turnout_detail)
+
+convert: $(build_turnout_summary) $(build_turnout_detail)
 clean_convert:
 	rm -rv $(build)/*
-	rm -rv $(example)
 
 
 # General
