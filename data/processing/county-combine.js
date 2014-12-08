@@ -8,7 +8,7 @@ var fs = require('fs');
 var _ = require('lodash');
 
 // Get data
-var countyGeo = require('../original/county2012.geo.json');
+var countyGeo = require('../build/county2012-4326.geo.json');
 var turnoutSummary = require('../build/turnout_summary.json');
 var turnoutDetail = require('../build/turnout_detail.json');
 

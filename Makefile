@@ -23,6 +23,7 @@ local_turnout_xls := $(original)/sec-of-state-county-turnout-registration-rates-
 local_county_geojson := $(original)/county2012.geo.json
 
 # Converted
+build_county_geojson_4326 := $(build)/county2012-4326.geo.json
 build_turnout_summary := $(build)/turnout_summary.json
 build_turnout_detail := $(build)/turnout_detail.json
 
@@ -44,20 +45,23 @@ clean_download:
 
 
 # Convert files
+$(build_county_geojson_4326): $(local_county_geojson)
+	ogr2ogr -f GeoJSON -t_srs EPSG:4326 -s_srs EPSG:26915 $(build_county_geojson_4326) $(local_county_geojson)
+
 $(build_turnout_summary): $(local_turnout_xls)
 	in2csv --sheet=Summary $(local_turnout_xls) | csvjson > $(build_turnout_summary)
 
 $(build_turnout_detail): $(local_turnout_xls)
 	in2csv --sheet=Detail $(local_turnout_xls) | csvjson > $(build_turnout_detail)
 
-convert: $(build_turnout_summary) $(build_turnout_detail)
+convert: $(build_county_geojson_4326) $(build_turnout_summary) $(build_turnout_detail)
 clean_convert:
 	rm -rv $(build)/*
 
 
 
 # Final processing
-$(county_turnout): $(build_turnout_summary) $(build_turnout_detail) $(local_county_geojson)
+$(county_turnout): $(build_county_geojson_4326) $(build_turnout_summary) $(build_turnout_detail)
 	node data/processing/county-combine.js
 
 processing: $(county_turnout)
