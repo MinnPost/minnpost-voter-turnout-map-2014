@@ -1,0 +1,14 @@
+/**
+ * Styles for: minnpost-voter-turnout-map-2014
+ */
+
+// Import MinnPost Styles parts
+@import "../bower_components/minnpost-styles/styles/common.scss";
+#{$selector-wrapper} {
+  // Import specific parts as need.  Specificity doesn't always
+  // work out well
+  //@import "../bower_components/minnpost-styles/styles/_nav.scss";
+}
+
+@import "_mixins";
+@import "_styles";

@@ -1,0 +1,32 @@
+/**
+ * Main styles for: minnpost-voter-turnout-map-2014
+ */
+
+
+// This makes the unpublished background not as annoying
+body .node-unpublished {
+  background-repeat: no-repeat;
+}
+
+// Wrap everything for specificity
+.mp .minnpost-voter-turnout-map-2014-container {
+
+  .application-container {
+    padding-top: 3em;
+  }
+
+
+  // Default responsive points
+  // $responsive-points: (
+  //   ("all", 0px),
+  //   ("small", 420px),
+  //   ("medium", 640px),
+  //   ("large", 960px),
+  //   ("xlarge", 1200px)
+  // ) !default;
+
+  // Medium breakpoint
+  @media screen and (max-width: nth(nth($responsive-points, 3), 2)) {
+
+  }
+}
