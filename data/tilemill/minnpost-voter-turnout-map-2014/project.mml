@@ -1,0 +1,52 @@
+{
+  "bounds": [
+    -98.0859,
+    42.8438,
+    -88.9453,
+    49.6392
+  ],
+  "center": [
+    -93.3179,
+    45.5294,
+    6
+  ],
+  "format": "png8",
+  "interactivity": {
+    "layer": "county-turnout",
+    "template_teaser": "{{{COUNTY}}} {{{t2008}}} {{{t2010}}} {{{t2012}}} {{{t2014}}}"
+  },
+  "minzoom": 6,
+  "maxzoom": 12,
+  "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over",
+  "Stylesheet": [
+    "style.mss"
+  ],
+  "Layer": [
+    {
+      "geometry": "polygon",
+      "extent": [
+        -97.23919599999101,
+        43.49936099999889,
+        -89.48338499996117,
+        49.38435799999002
+      ],
+      "id": "county-turnout",
+      "class": "",
+      "Datasource": {
+        "file": "layers/county_turnout.geo.json",
+        "layer": "OGRGeoJSON"
+      },
+      "layer": null,
+      "srs-name": "autodetect",
+      "srs": "",
+      "advanced": {},
+      "name": "county-turnout"
+    }
+  ],
+  "scale": 1,
+  "metatile": 2,
+  "name": "Voter turnout by county 2014",
+  "description": "",
+  "attribution": "",
+  "legend": ""
+}
