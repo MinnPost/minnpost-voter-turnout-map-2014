@@ -16,7 +16,7 @@ require.config({
     // Mapbox and requireJS don't really work because there are multiple
     // defines, so we just let the L be global
     'mapbox': {
-      exports: 'mapbox'
+      exports: 'L'
     },
     'lazyload': {
       exports: 'LazyLoad'

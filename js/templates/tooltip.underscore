@@ -1,0 +1,8 @@
+<div class="inner-tooltip">
+  <div class="component-label"><%= data.COUNTY %></div>
+
+  <div>2008 turnout: <%= format.percent(data.t2008, 1) %></div>
+  <div>2010 turnout: <%= format.percent(data.t2010, 1) %></div>
+  <div>2012 turnout: <%= format.percent(data.t2012, 1) %></div>
+  <div>2014 turnout: <strong><%= format.percent(data.t2014, 1) %></strong></div>
+</div>

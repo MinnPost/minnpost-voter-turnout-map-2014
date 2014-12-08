@@ -3,32 +3,25 @@
 
   <div class="content-container">
 
-    <h3>Minnpost Voter Turnout Map 2014</h3>
+    <p>Turnout for the 2014 general election.</p>
 
-    <div class="loading-block"></div>
+    <div class="component-label">Voter turnout for the 2014 general election</div>
 
-    <p>Welcome to your new MinnPost application, built from the MinnPost Templating system.  Make sure to use the <a href="http://code.minnpost.com/minnpost-styles/">MinnPost Style Guide</a> for all your styling needs.</p>
+    <ul class="legend-container">
+      {{#legend}}
+        <li><span class="legend-swatch" style="background-color: {{ color }}"></span> <span class="legend-label">{{ label }}</span></li>
+      {{/legend}}
+    </ul>
 
-    
-    
-
-    
-    <div class="component-label">Map example</div>
-    <div class="caption">Here is an awesome, concise caption.</div>
-    <div class="map" id="example-markers-features-map"></div>
-    
-
-    
-    
-
+    <div class="map" id="voter-turnout-2014"></div>
   </div>
 
   <div class="footnote-container">
     <div class="footnote">
       <p>Some code, techniques, and data on <a href="https://github.com/minnpost/minnpost-voter-turnout-map-2014" target="_blank">Github</a>.</p>
-      
-        <p>Some map data © OpenStreetMap contributors; licensed under the <a href="http://www.openstreetmap.org/copyright" target="_blank">Open Data Commons Open Database License</a>.  Some map design © MapBox; licensed according to the <a href="http://mapbox.com/tos/" target="_blank">MapBox Terms of Service</a>.  Location geocoding provided by <a href="http://www.mapquest.com/" target="_blank">Mapquest</a> and is not guaranteed to be accurate.</p>
-      
+
+        <p>Some map data © OpenStreetMap contributors; licensed under the <a href="http://www.openstreetmap.org/copyright" target="_blank">Open Data Commons Open Database License</a>.  Some map design © MapBox; licensed according to the <a href="http://mapbox.com/tos/" target="_blank">MapBox Terms of Service</a>.</p>
+
     </div>
   </div>
 </div>

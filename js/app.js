@@ -7,17 +7,15 @@
 
 // Create main application
 require([
-  'jquery', 'underscore', 'backbone', 'lazyload', 'ractive', 'ractive-backbone', 'ractive-events-tap', 'mapbox', 'mpConfig', 'mpFormatters', 'mpMaps', 
-  'base',
-  
-  
-  'text!templates/application.mustache'
+  'jquery', 'underscore', 'backbone', 'lazyload', 'ractive',
+  'ractive-backbone', 'ractive-events-tap', 'mapbox',
+  'mpConfig', 'mpFormatters', 'mpMaps', 'base',
+  'text!templates/application.mustache',
+  'text!templates/tooltip.underscore'
 ], function(
-  $, _, Backbone, Lazyload, Ractive, RactiveBackbone, RactiveEventsTap, L, mpConfig, mpFormatters, mpMaps, 
-  Base,
-  
-  
-  tApplication
+  $, _, Backbone, Lazyload, Ractive, RactiveBackbone,
+  RactiveEventsTap, L, mpConfig, mpFormatters, mpMaps, Base,
+  tApplication, tTooltip
   ) {
   'use strict';
 
@@ -26,85 +24,86 @@ require([
 
     defaults: {
       name: 'minnpost-voter-turnout-map-2014',
-      el: '.minnpost-voter-turnout-map-2014-container'
+      el: '.minnpost-voter-turnout-map-2014-container',
+      mapboxComp: 'minnpost.map-vhjzpwel,minnpost.usbxogvi,minnpost.map-dotjndlk',
+      mapboxBase: '//{s}.tiles.mapbox.com/v3/',
+      mapboxToken: 'pk.eyJ1IjoibWlubnBvc3QiLCJhIjoicUlOUkpvWSJ9.djE93rNktev9eWRJVav6xA'
     },
 
     initialize: function() {
       var thisApp = this;
 
-      
       // Create main application view
       this.mainView = new Ractive({
         el: this.$el,
         template: tApplication,
         data: {
+          legend: [
+            { label: '< 45%', color: '#bfdcd9' },
+            { label: '>= 45% < 50', color: '#7cb8c5' },
+            { label: '>= 50% < 55', color: '#4691ba' },
+            { label: '>= 55% < 60', color: '#3c64a7' },
+            { label: '>= 60%', color: '#55307e' }
+          ]
         },
         partials: {
         }
       });
-      
 
-      
-      // Run examples.  Please remove for real application.
-      //
-      // Because of how Ractive initializes and how Highcharts work
-      // there is an inconsitency of when the container for the chart
-      // is ready and when highcharts loads the chart.  So, we put a bit of
-      // of a pause.
-      //
-      // In production, intializing a chart should be tied to data which
-      // can be used with a Ractive observer.
-      //
-      // This should not happen with underscore templates.
-      _.delay(function() { thisApp.makeExamples(); }, 400);
-      
-    },
 
-    
-    // Make some example depending on what parts were asked for in the
-    // templating process.  Remove, rename, or alter this.
-    makeExamples: function() {
-      
-
-      
-
-      
-      var markerMap = mpMaps.makeLeafletMap('example-markers-features-map');
-      var tooltipControl = new mpMaps.TooltipControl();
-      markerMap.setZoom(9);
-      markerMap.addControl(tooltipControl);
-
-      // Markers
-      var iconCinema = mpMaps.makeMakiIcon('cinema', 'm');
-      var iconBlank = mpMaps.makeMakiIcon('', 's', '222222');
-      L.marker(mpMaps.minneapolisPoint, { icon: iconCinema })
-        .addTo(markerMap).bindPopup('Minneapolis', {
-          closeButton: false
-        });
-      L.marker(mpMaps.stPaulPoint, { icon: iconBlank })
-        .addTo(markerMap).bindPopup('St. Paul', {
-          closeButton: false
-        });
-
-      // GeoJSON example
-      $.getJSON('//boundaries.minnpost.com/1.0/boundary/27-county-2010/?callback=?', function(data) {
-        if (data.simple_shape) {
-          L.geoJson(data.simple_shape, {
-            style: mpMaps.mapStyle,
-            onEachFeature: function(feature, layer) {
-              layer.on('mouseover', function(e) {
-                tooltipControl.update('Hennepin County');
-              });
-              layer.on('mouseout', function(e) {
-                tooltipControl.hide();
-              });
-            }
-          }).addTo(markerMap);
+      // Get tilejson
+      $.ajax({
+        url: this.options.mapboxBase.replace('{s}', 'a') + this.options.mapboxComp + '.json?callback=?',
+        dataType: 'jsonp',
+        cache: true,
+        success: function(data) {
+          thisApp.tilejson = data;
+          thisApp.makeMap();
         }
       });
-      
     },
-    
+
+
+    // Make map.  Note that Mapbox 2.x does not support jsonp anymore but grid
+    // tiles still seem to be in jsonp, so we use a 1.x version
+    makeMap: function() {
+
+      L.mapbox.accessToken = this.options.mapboxToken;
+      this.map = L.mapbox.map('voter-turnout-2014', this.tilejson, {
+        scrollWheelZoom: false,
+        trackResize: true,
+        minZoom: 6,
+        maxZoom: 12
+      });
+      // Remove attribution control
+      //this.map.removeControl(this.map.infoControl);
+      this.map.removeControl(this.map.attributionControl);
+
+      // Override the template function in Mapbox's grid control because
+      // it doesn't expose more options and Mustache is stupid
+      this.map.gridControl._template = function(format, data) {
+        if (!data) {
+          return;
+        }
+
+        var template = this.options.template || this._layer.getTileJSON().template;
+
+        if (template) {
+          return this.options.sanitizer(
+            _.template(template)({
+              format: mpFormatters,
+              data: data
+            })
+          );
+        }
+      };
+
+      // Set new template
+      this.map.gridControl.setTemplate(tTooltip);
+      this.map.gridControl.options.pinnable = false;
+
+    },
+
   });
 
   // Create instance and return
