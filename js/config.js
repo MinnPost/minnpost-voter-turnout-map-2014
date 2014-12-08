@@ -13,22 +13,17 @@ require.config({
     }
   },
   shim: {
-    
-    
-    
-    // Mapbox and requireJS don't really work, so we just let
-    // the L be global
+    // Mapbox and requireJS don't really work because there are multiple
+    // defines, so we just let the L be global
     'mapbox': {
       exports: 'mapbox'
     },
-    
     'lazyload': {
       exports: 'LazyLoad'
     }
   },
   baseUrl: 'js',
   paths: {
-    
     'requirejs': '../bower_components/requirejs/require',
     'almond': '../bower_components/almond/almond',
     'text': '../bower_components/text/text',
@@ -43,6 +38,7 @@ require.config({
     'mpConfig': '../bower_components/minnpost-styles/dist/minnpost-styles.config',
     'mpFormatters': '../bower_components/minnpost-styles/dist/minnpost-styles.formatters',
     'mpMaps': '../bower_components/minnpost-styles/dist/minnpost-styles.maps',
+    'leaflet': 'build/leaflet-hack',
     'jquery-noconflict': 'build/jquery-noconflict'
   }
 });
