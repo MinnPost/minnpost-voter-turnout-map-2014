@@ -42,18 +42,38 @@ turnoutDetail = _.filter(turnoutDetail, function(d, di) {
   return !!d['2010 Turnout Percent'];
 });
 turnoutDetail = _.map(turnoutDetail, function(d, di) {
+  var n = {
+    county: d['County'],
+    county_id: d['County'].replace(/\W/g, '').toLowerCase(),
+    r2014: parseInt(d['7 AM Registered'], 10),
+    v2014: parseInt(d['2014 Total Voters'], 10)
+  };
+  n.vPerR = (n.v2014 / n.r2014);
+  return n;
 });
 
 // GeoJson match up
 countyGeo.features = _.map(countyGeo.features, function(f, fi) {
   var county_id = f.properties.NAME.replace(/\W/g, '').toLowerCase();
-  var turnout = _.findWhere(turnoutSummary, { county_id: county_id });
+  var summary = _.findWhere(turnoutSummary, { county_id: county_id });
+  var details = _.findWhere(turnoutDetail, { county_id: county_id });
 
-  if (!turnout) {
+  // Match up summary
+  if (!summary) {
+    console.log('Summary miss:');
     console.log(d.properties);
   }
   else {
-    f.properties = _.extend(f.properties, turnout);
+    f.properties = _.extend(f.properties, summary);
+  }
+
+  // Match up details
+  if (!details) {
+    console.log('Detail miss:');
+    console.log(d.properties);
+  }
+  else {
+    f.properties = _.extend(f.properties, details);
   }
 
   return f;

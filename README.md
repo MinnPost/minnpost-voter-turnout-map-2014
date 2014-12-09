@@ -42,7 +42,9 @@ Get the code for this project and install the necessary dependency libraries and
 ### Data processing
 
 1. The `Makefile` runs tasks such as downloading sources and converting data: `make`
-1. Link the TileMill project: `ln -s $(pwd)/data/tilemill/minnpost-voter-turnout-map-2014 ~/Documents/Mapbox/project/minnpost-voter-turnout-map-2014`
+1. Link the TileMill projects:
+    * `ln -s $(pwd)/data/tilemill/minnpost-voter-turnout-map-2014 ~/Documents/Mapbox/project/minnpost-voter-turnout-map-2014`
+    * `ln -s $(pwd)/data/tilemill/minnpost-voter-turnout-map-2014-registered ~/Documents/Mapbox/project/minnpost-voter-turnout-map-2014-registered`
 
 ### Running locally
 

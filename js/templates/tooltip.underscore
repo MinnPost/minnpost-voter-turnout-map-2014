@@ -5,4 +5,6 @@
   <div>2010 turnout: <%= format.percent(data.t2010, 1) %></div>
   <div>2012 turnout: <%= format.percent(data.t2012, 1) %></div>
   <div>2014 turnout: <strong><%= format.percent(data.t2014, 1) %></strong></div>
+  <br>
+  <div>2014 voters per number of registered as of the morning of Nov 4th, 2015: <%= format.percent(data.vPerR, 1) %></div>
 </div>

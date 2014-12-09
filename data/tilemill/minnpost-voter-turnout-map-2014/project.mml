@@ -6,14 +6,21 @@
     49.6392
   ],
   "center": [
-    -93.3179,
-    45.5294,
+    -94.3066,
+    46.0809,
     6
   ],
   "format": "png8",
   "interactivity": {
     "layer": "county-turnout",
-    "template_teaser": "{{{COUNTY}}} {{{t2008}}} {{{t2010}}} {{{t2012}}} {{{t2014}}}"
+    "template_teaser": "{{{COUNTY}}} {{{t2008}}} {{{t2010}}} {{{t2012}}} {{{t2014}}} {{{vPerR}}}",
+    "fields": [
+      "COUNTY",
+      "t2008",
+      "t2010",
+      "t2012",
+      "t2014"
+    ]
   },
   "minzoom": 6,
   "maxzoom": 12,
@@ -48,5 +55,6 @@
   "name": "Voter turnout by county 2014",
   "description": "",
   "attribution": "",
-  "legend": ""
+  "legend": "",
+  "version": "0.0.2"
 }

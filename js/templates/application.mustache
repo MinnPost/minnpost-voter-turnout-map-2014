@@ -8,12 +8,26 @@
     <div class="caption">Voter turnout rate calculated by dividing ballots cast by estimated number of citizens who are 18 years and older&dagger;.</div>
 
     <ul class="legend-container small">
-      {{#legend}}
+      {{#legendTurnout}}
         <li><span class="legend-swatch" style="background-color: {{ color }}"></span> <span class="legend-label">{{ label }}</span></li>
       {{/legend}}
     </ul>
 
     <div class="map" id="voter-turnout-2014"></div>
+
+
+
+    <div class="component-label">Voters per registered for the 2014 general election</div>
+
+    <div class="caption">Voter turnout per number registered rate calculated by dividing ballots cast by estimated number of people registered as of the morning of election day, November 4th, 2015.</div>
+
+    <ul class="legend-container small">
+      {{#legendRegistered}}
+      <li><span class="legend-swatch" style="background-color: {{ color }}"></span> <span class="legend-label">{{ label }}</span></li>
+      {{/legend}}
+    </ul>
+
+    <div class="map" id="voter-turnout-registered-2014"></div>
   </div>
 
   <div class="footnote-container">
