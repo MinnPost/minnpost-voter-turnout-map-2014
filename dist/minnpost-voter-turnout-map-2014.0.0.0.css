@@ -2069,7 +2069,7 @@ body .node-unpublished {
 .mp .minnpost-voter-turnout-map-2014-container .application-container {
   padding-top: 3em;
 }
-.mp .minnpost-voter-turnout-map-2014-container #voter-turnout-2014 {
+.mp .minnpost-voter-turnout-map-2014-container .map {
   height: 42em;
 }
 .mp .minnpost-voter-turnout-map-2014-container .legend-container {

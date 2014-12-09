@@ -45,6 +45,7 @@ Get the code for this project and install the necessary dependency libraries and
 1. Link the TileMill projects:
     * `ln -s $(pwd)/data/tilemill/minnpost-voter-turnout-map-2014 ~/Documents/Mapbox/project/minnpost-voter-turnout-map-2014`
     * `ln -s $(pwd)/data/tilemill/minnpost-voter-turnout-map-2014-registered ~/Documents/Mapbox/project/minnpost-voter-turnout-map-2014-registered`
+1. Exported and uploaded to Mapbox.
 
 ### Running locally
 

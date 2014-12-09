@@ -44328,10 +44328,10 @@ define('base',['jquery', 'underscore', 'backbone', 'lazyload', 'mpFormatters', '
 });
 
 
-define('text!templates/application.mustache',[],function () { return '<div class="application-container">\n  <div class="message-container"></div>\n\n  <div class="content-container">\n\n    <div class="component-label">Voter turnout for the 2014 general election</div>\n\n    <div class="caption">Voter turnout rate calculated by dividing ballots cast by estimated number of citizens who are 18 years and older&dagger;.</div>\n\n    <ul class="legend-container small">\n      {{#legend}}\n        <li><span class="legend-swatch" style="background-color: {{ color }}"></span> <span class="legend-label">{{ label }}</span></li>\n      {{/legend}}\n    </ul>\n\n    <div class="map" id="voter-turnout-2014"></div>\n  </div>\n\n  <div class="footnote-container">\n    <div class="footnote">\n      <p>&dagger;"Minnesota\'s statewide turnout is officially reported using the eligible voter estimate from the United States Elections Project, which more accurately accounts for all eligibility factors. The data [provided] does not take into account some eligibility factors, and so varies slightly from the official statewide number. For comparison, 2014 statewide turnout is officially 50.51%, versus 51.29% using the data below.  Registration rate data based on number of registrations by start of voting on Election Day, November 4, 2014. It does not include voters who registered on Election Day." (noted from the turnout dataset)</p>\n\n      <p>Voter data from the <a href="http://www.sos.state.mn.us/Modules/ShowDocument.aspx?documentid=14558" target="_blank">MN Secretary of State\'s office</a>.  County boundaries from the <a href="http://www.gis.leg.mn/html/download.html" target="_blank">MN State Legislative Coordinating Commission GIS department</a>.</p>\n\n      <p>Some map data © OpenStreetMap contributors; licensed under the <a href="http://www.openstreetmap.org/copyright" target="_blank">Open Data Commons Open Database License</a>.  Some map design © MapBox; licensed according to the <a href="http://mapbox.com/tos/" target="_blank">MapBox Terms of Service</a>.</p>\n\n      <p>Some code, techniques, and data on <a href="https://github.com/minnpost/minnpost-voter-turnout-map-2014" target="_blank">Github</a>.</p>\n    </div>\n  </div>\n</div>\n';});
+define('text!templates/application.mustache',[],function () { return '<div class="application-container">\n  <div class="message-container"></div>\n\n  <div class="content-container">\n\n    <div class="component-label">Voter turnout for the 2014 general election</div>\n\n    <div class="caption">Voter turnout rate calculated by dividing ballots cast by estimated number of citizens who are 18 years and older&dagger;.</div>\n\n    <ul class="legend-container small">\n      {{#legendTurnout}}\n        <li><span class="legend-swatch" style="background-color: {{ color }}"></span> <span class="legend-label">{{ label }}</span></li>\n      {{/legend}}\n    </ul>\n\n    <div class="map" id="voter-turnout-2014"></div>\n\n\n\n    <div class="component-label">Voters per registered for the 2014 general election</div>\n\n    <div class="caption">Voter turnout per number registered rate calculated by dividing ballots cast by estimated number of people registered as of the morning of election day, November 4th, 2015.</div>\n\n    <ul class="legend-container small">\n      {{#legendRegistered}}\n      <li><span class="legend-swatch" style="background-color: {{ color }}"></span> <span class="legend-label">{{ label }}</span></li>\n      {{/legend}}\n    </ul>\n\n    <div class="map" id="voter-turnout-registered-2014"></div>\n  </div>\n\n  <div class="footnote-container">\n    <div class="footnote">\n      <p>&dagger;"Minnesota\'s statewide turnout is officially reported using the eligible voter estimate from the United States Elections Project, which more accurately accounts for all eligibility factors. The data [provided] does not take into account some eligibility factors, and so varies slightly from the official statewide number. For comparison, 2014 statewide turnout is officially 50.51%, versus 51.29% using the data below.  Registration rate data based on number of registrations by start of voting on Election Day, November 4, 2014. It does not include voters who registered on Election Day." (noted from the turnout dataset)</p>\n\n      <p>Voter data from the <a href="http://www.sos.state.mn.us/Modules/ShowDocument.aspx?documentid=14558" target="_blank">MN Secretary of State\'s office</a>.  County boundaries from the <a href="http://www.gis.leg.mn/html/download.html" target="_blank">MN State Legislative Coordinating Commission GIS department</a>.</p>\n\n      <p>Some map data © OpenStreetMap contributors; licensed under the <a href="http://www.openstreetmap.org/copyright" target="_blank">Open Data Commons Open Database License</a>.  Some map design © MapBox; licensed according to the <a href="http://mapbox.com/tos/" target="_blank">MapBox Terms of Service</a>.</p>\n\n      <p>Some code, techniques, and data on <a href="https://github.com/minnpost/minnpost-voter-turnout-map-2014" target="_blank">Github</a>.</p>\n    </div>\n  </div>\n</div>\n';});
 
 
-define('text!templates/tooltip.underscore',[],function () { return '<div class="inner-tooltip">\n  <div class="component-label"><%= data.COUNTY %></div>\n\n  <div>2008 turnout: <%= format.percent(data.t2008, 1) %></div>\n  <div>2010 turnout: <%= format.percent(data.t2010, 1) %></div>\n  <div>2012 turnout: <%= format.percent(data.t2012, 1) %></div>\n  <div>2014 turnout: <strong><%= format.percent(data.t2014, 1) %></strong></div>\n</div>\n';});
+define('text!templates/tooltip.underscore',[],function () { return '<div class="inner-tooltip">\n  <div class="component-label"><%= data.COUNTY %></div>\n\n  <div>2008 turnout: <%= format.percent(data.t2008, 1) %></div>\n  <div>2010 turnout: <%= format.percent(data.t2010, 1) %></div>\n  <div>2012 turnout: <%= format.percent(data.t2012, 1) %></div>\n  <div>2014 turnout: <strong><%= format.percent(data.t2014, 1) %></strong></div>\n  <br>\n  <div>2014 voters per number of registered as of the morning of Nov 4th, 2015: <%= format.percent(data.vPerR, 1) %></div>\n</div>\n';});
 
 /**
  * Main application file for: minnpost-voter-turnout-map-2014
@@ -44360,7 +44360,8 @@ require([
     defaults: {
       name: 'minnpost-voter-turnout-map-2014',
       el: '.minnpost-voter-turnout-map-2014-container',
-      mapboxComp: 'minnpost.map-vhjzpwel,minnpost.usbxogvi,minnpost.map-dotjndlk',
+      mapboxCompTurnout: 'minnpost.map-vhjzpwel,minnpost.usbxogvi,minnpost.map-dotjndlk',
+      mapboxCompRegistered: 'minnpost.map-vhjzpwel,minnpost.1dvg3nmi,minnpost.map-dotjndlk',
       mapboxBase: '//{s}.tiles.mapbox.com/v3/',
       mapboxToken: 'pk.eyJ1IjoibWlubnBvc3QiLCJhIjoicUlOUkpvWSJ9.djE93rNktev9eWRJVav6xA'
     },
@@ -44373,27 +44374,42 @@ require([
         el: this.$el,
         template: tApplication,
         data: {
-          legend: [
+          legendTurnout: [
             { label: '< 45%', color: '#bfdcd9' },
-            { label: '>= 45 < 50%', color: '#7cb8c5' },
-            { label: '>= 50 < 55%', color: '#4691ba' },
-            { label: '>= 55 < 60%', color: '#3c64a7' },
+            { label: '45 - 50%', color: '#7cb8c5' },
+            { label: '50 - 55%', color: '#4691ba' },
+            { label: '55 - 60%', color: '#3c64a7' },
             { label: '>= 60%', color: '#55307e' }
+          ],
+          legendRegistered: [
+            { label: '< 60%', color: '#d6e6ce' },
+            { label: '60 - 65%', color: '#c4c693' },
+            { label: '65 - 70%', color: '#c2a25c' },
+            { label: '70 - 75%', color: '#c67736' },
+            { label: '>= 75%', color: '#c83d2d' }
           ]
         },
         partials: {
         }
       });
 
-
-      // Get tilejson
+      // Get tilejsons
       $.ajax({
-        url: this.options.mapboxBase.replace('{s}', 'a') + this.options.mapboxComp + '.json?callback=?',
+        url: this.options.mapboxBase.replace('{s}', 'a') + this.options.mapboxCompTurnout + '.json?callback=?',
         dataType: 'jsonp',
         cache: true,
         success: function(data) {
-          thisApp.tilejson = data;
-          thisApp.makeMap();
+          thisApp.tilejsonTurnout = data;
+
+          $.ajax({
+            url: thisApp.options.mapboxBase.replace('{s}', 'a') + thisApp.options.mapboxCompRegistered + '.json?callback=?',
+            dataType: 'jsonp',
+            cache: true,
+            success: function(data) {
+              thisApp.tilejsonRegistered = data;
+              thisApp.makeMaps();
+            }
+          });
         }
       });
     },
@@ -44401,29 +44417,26 @@ require([
 
     // Make map.  Note that Mapbox 2.x does not support jsonp anymore but grid
     // tiles still seem to be in jsonp, so we use a 1.x version
-    makeMap: function() {
-
+    makeMaps: function() {
       L.mapbox.accessToken = this.options.mapboxToken;
-      this.map = L.mapbox.map('voter-turnout-2014', this.tilejson, {
+
+      // First map
+      this.mapTurnout = L.mapbox.map('voter-turnout-2014', this.tilejsonTurnout, {
         scrollWheelZoom: false,
         trackResize: true,
         minZoom: 6,
         maxZoom: 12
       });
-      this.map.setView(mpMaps.minnesotaPoint);
-      // Remove attribution control
-      //this.map.removeControl(this.map.infoControl);
-      this.map.removeControl(this.map.attributionControl);
+      this.mapTurnout.setView(mpMaps.minnesotaPoint);
+      this.mapTurnout.removeControl(this.mapTurnout.attributionControl);
 
       // Override the template function in Mapbox's grid control because
       // it doesn't expose more options and Mustache is stupid
-      this.map.gridControl._template = function(format, data) {
+      this.mapTurnout.gridControl._template = function(format, data) {
         if (!data) {
           return;
         }
-
         var template = this.options.template || this._layer.getTileJSON().template;
-
         if (template) {
           return this.options.sanitizer(
             _.template(template)({
@@ -44433,10 +44446,37 @@ require([
           );
         }
       };
+      this.mapTurnout.gridControl.setTemplate(tTooltip);
+      this.mapTurnout.gridControl.options.pinnable = false;
 
-      // Set new template
-      this.map.gridControl.setTemplate(tTooltip);
-      this.map.gridControl.options.pinnable = false;
+      // Second map
+      this.mapRegistered = L.mapbox.map('voter-turnout-registered-2014', this.tilejsonRegistered, {
+        scrollWheelZoom: false,
+        trackResize: true,
+        minZoom: 6,
+        maxZoom: 12
+      });
+      this.mapRegistered.setView(mpMaps.minnesotaPoint);
+      this.mapRegistered.removeControl(this.mapRegistered.attributionControl);
+
+      // Override the template function in Mapbox's grid control because
+      // it doesn't expose more options and Mustache is stupid
+      this.mapRegistered.gridControl._template = function(format, data) {
+        if (!data) {
+          return;
+        }
+        var template = this.options.template || this._layer.getTileJSON().template;
+        if (template) {
+          return this.options.sanitizer(
+            _.template(template)({
+              format: mpFormatters,
+              data: data
+            })
+          );
+        }
+      };
+      this.mapRegistered.gridControl.setTemplate(tTooltip);
+      this.mapRegistered.gridControl.options.pinnable = false;
 
     },
 
