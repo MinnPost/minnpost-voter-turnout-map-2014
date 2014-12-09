@@ -7,7 +7,7 @@
 #{$selector-wrapper} {
   // Import specific parts as need.  Specificity doesn't always
   // work out well
-  //@import "../bower_components/minnpost-styles/styles/_nav.scss";
+  @import "../bower_components/minnpost-styles/styles/_maps.scss";
 }
 
 @import "_mixins";
