@@ -60,7 +60,7 @@ module.exports = function(grunt) {
       files: ['Gruntfile.js', 'js/**/*.js', 'tests/**/*.js', 'data-processing/**/*.js']
     },
 
-    
+
     // Compass is an extended SASS.  Set it up so that it generates to .tmp/
     compass: {
       options: {
@@ -89,7 +89,6 @@ module.exports = function(grunt) {
         }
       }
     },
-    
 
     // Copy relevant files over to distribution
     copy: {
@@ -109,8 +108,18 @@ module.exports = function(grunt) {
             cwd: './data/',
             expand: true,
             filter: 'isFile',
-            src: ['**/*.json'],
+            src: ['*.json'],
             dest: 'dist/data/'
+          }
+        ]
+      },
+      mapboxImages: {
+        files: [
+          {
+            cwd: './bower_components/mapbox.js/images',
+            expand: true,
+            src: ['**'],
+            dest: 'dist/images/'
           }
         ]
       }
@@ -185,7 +194,7 @@ module.exports = function(grunt) {
       // CSS
       css: {
         src: [
-          
+
           '<%= compass.dist.options.cssDir %>/main.css'
         ],
         dest: 'dist/<%= pkg.name %>.<%= pkg.version %>.css'
@@ -383,10 +392,10 @@ module.exports = function(grunt) {
   grunt.registerTask('test', ['connect', 'qunit']);
 
   // Watch tasks
-  
+
   grunt.registerTask('watcher', ['jshint', 'compass:dev']);
   grunt.registerTask('server', ['jshint', 'compass:dev', 'browserSync', 'watch']);
-  
+
 
   // Deploy tasks
   grunt.registerTask('deploy', ['s3', 'inline_embed:minnpost-voter-turnout-map-2014']);
