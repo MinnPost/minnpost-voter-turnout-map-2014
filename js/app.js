@@ -40,9 +40,9 @@ require([
         data: {
           legend: [
             { label: '< 45%', color: '#bfdcd9' },
-            { label: '>= 45% < 50', color: '#7cb8c5' },
-            { label: '>= 50% < 55', color: '#4691ba' },
-            { label: '>= 55% < 60', color: '#3c64a7' },
+            { label: '>= 45 < 50%', color: '#7cb8c5' },
+            { label: '>= 50 < 55%', color: '#4691ba' },
+            { label: '>= 55 < 60%', color: '#3c64a7' },
             { label: '>= 60%', color: '#55307e' }
           ]
         },
@@ -75,6 +75,7 @@ require([
         minZoom: 6,
         maxZoom: 12
       });
+      this.map.setView(mpMaps.minnesotaPoint);
       // Remove attribution control
       //this.map.removeControl(this.map.infoControl);
       this.map.removeControl(this.map.attributionControl);

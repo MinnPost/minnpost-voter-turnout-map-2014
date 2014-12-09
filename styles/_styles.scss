@@ -19,6 +19,31 @@ body .node-unpublished {
     height: 42em;
   }
 
+  .legend-container {
+    margin: 0 0 1em 0;
+    padding: 0;
+    list-style: none;
+    text-align: center;
+
+    li {
+      @include inline-block();
+      margin: 0;
+      padding: 0 1.5em 0 0;
+
+      .legend-swatch {
+        @include inline-block();
+        height: 1.5em;
+        width: 1.5em;
+        margin-right: 0.25em;
+        vertical-align: middle;
+      }
+
+      .legend-label {
+
+      }
+    }
+  }
+
   // Default responsive points
   // $responsive-points: (
   //   ("all", 0px),
