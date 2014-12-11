@@ -1,0 +1,6 @@
+<div class="inner-tooltip">
+  <div class="component-label"><%= data.COUNTY %></div>
+
+
+  <div>2014 voters per number of registered as of the morning of Nov 4th, 2015: <strong><%= format.percent(data.vPerR, 1) %></strong></div>
+</div>

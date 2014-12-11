@@ -11,11 +11,12 @@ require([
   'ractive-backbone', 'ractive-events-tap', 'mapbox',
   'mpConfig', 'mpFormatters', 'mpMaps', 'base',
   'text!templates/application.mustache',
-  'text!templates/tooltip.underscore'
+  'text!templates/tooltip-turnout.underscore',
+  'text!templates/tooltip-registered.underscore'
 ], function(
   $, _, Backbone, Lazyload, Ractive, RactiveBackbone,
   RactiveEventsTap, L, mpConfig, mpFormatters, mpMaps, Base,
-  tApplication, tTooltip
+  tApplication, tTooltipTurnout, tTooltipRegistered
   ) {
   'use strict';
 
@@ -111,7 +112,7 @@ require([
           );
         }
       };
-      this.mapTurnout.gridControl.setTemplate(tTooltip);
+      this.mapTurnout.gridControl.setTemplate(tTooltipTurnout);
       this.mapTurnout.gridControl.options.pinnable = false;
 
       // Second map
@@ -140,7 +141,7 @@ require([
           );
         }
       };
-      this.mapRegistered.gridControl.setTemplate(tTooltip);
+      this.mapRegistered.gridControl.setTemplate(tTooltipRegistered);
       this.mapRegistered.gridControl.options.pinnable = false;
 
     },
