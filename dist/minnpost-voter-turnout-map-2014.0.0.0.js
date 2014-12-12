@@ -248,7 +248,7 @@ define('text!templates/application.mustache',[],function () { return '<div class
 define('text!templates/tooltip-turnout.underscore',[],function () { return '<div class="inner-tooltip">\n  <div class="component-label"><%= data.COUNTY %></div>\n\n  <div>2008 turnout: <%= format.percent(data.t2008, 1) %></div>\n  <div>2010 turnout: <%= format.percent(data.t2010, 1) %></div>\n  <div>2012 turnout: <%= format.percent(data.t2012, 1) %></div>\n  <div>2014 turnout: <strong><%= format.percent(data.t2014, 1) %></strong></div>\n</div>\n';});
 
 
-define('text!templates/tooltip-registered.underscore',[],function () { return '<div class="inner-tooltip">\n  <div class="component-label"><%= data.COUNTY %></div>\n\n\n  <div>2014 voters per number of registered as of the morning of Nov 4th, 2015: <strong><%= format.percent(data.vPerR, 1) %></strong></div>\n</div>\n';});
+define('text!templates/tooltip-registered.underscore',[],function () { return '<div class="inner-tooltip">\n  <div class="component-label"><%= data.COUNTY %></div>\n\n\n  <div>Voters per those registered as of the morning of November 4th, 2014: <strong><%= format.percent(data.vPerR, 1) %></strong></div>\n</div>\n';});
 
 /**
  * Main application file for: minnpost-voter-turnout-map-2014
